@@ -29,13 +29,13 @@
 			<key>metadata</key>
 			<dict>
 				<key>bundle-identifier</key>
-				<string>com.ShandowRocket</string>
+				<string>com.chinatelecom.sd.cbzs</string>
 				<key>bundle-version</key>
-				<string>2.1.10</string>
+				<string>2.0</string>
 				<key>kind</key>
 				<string>software</string>
 				<key>title</key>
-				<string>ShandowRocket</string>
+				<string>承包助手</string>
 			</dict>
 		</dict>
 	</array>
