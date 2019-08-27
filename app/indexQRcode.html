@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>承包助手</title>
+    
+</head>
+<body>
+	<div id="divPC" style="display:none">
+		<center>
+			<div style="height:50px;"></div>
+			<div style="font-size:30px;color:red;">承包助手</div>
+			<img src="https://raw.githubusercontent.com/xyzz0609/cbzs/master/app/images/zzsp.png"  alt="承包助手二维码图片"/>
+			<div style="font-size:16px;color:black;">（iOS/Androd）</div>
+		</center>
+		<div style="height:50px;"> </div>
+		<center>
+			<div> <input style="display:block;width:50%; height:50px;" type="button" 
+			onclick="javascirpt:window.location.href='itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/xyzz0609/cbzs/master/app/zzsp.plist'; 
+			document.getElementById('rm').innerHTML='请返回手机桌面查看安装及进度';
+			document.getElementById('rm').style.color='red';" value="iOS安装"> 
+				<div id="rm"> </div>
+			</div>
+			<br />
+			<div> <input style="display:block;width:50%; height:50px;" type="button"  onclick="javascirpt:window.location.href='http://219.146.3.91:9001/appserver/down/MCSS_X.apk'" value="Androd安装"> </div>
+		</center>
+		<div style="height:50px;"> </div>
+	</div>
+</body>
+<script type="text/javascript">
+		var iosUrl = 'http://219.146.3.91:9001/appserver/index-ios.html';
+		var androidUrl = 'http://219.146.3.91:9001/appserver/down/MCSS_X.apk';
+        // 获取终端的相关信息
+        var Terminal = {
+            // 辨别移动终端类型
+            platform : function(){
+                var u = navigator.userAgent, app = navigator.appVersion;
+                return {
+                    // android终端或者uc浏览器
+                    android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+                    // 是否为iPhone或者QQHD浏览器
+                    iPhone: u.indexOf('iPhone') > -1 ,
+                    // 是否iPad
+                    iPad: u.indexOf('iPad') > -1
+                };
+            }(),
+            // 辨别移动终端的语言：zh-cn、en-us、ko-kr、ja-jp...
+            language : (navigator.browserLanguage || navigator.language).toLowerCase()
+        }
+		 //校验是电脑还是手机访问_yang_zzheng_20190806
+		function isPC() {
+			var system = {};
+			  var p = navigator.platform;
+			  var u = navigator.userAgent;
+
+			  system.win = p.indexOf("Win") == 0;
+			  system.mac = p.indexOf("Mac") == 0;
+			  system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
+			  if (system.win || system.mac || system.xll) {//如果是PC转
+				if (u.indexOf('Windows Phone') > -1) {  //win手机端
+					return false;
+				}else {
+					return true;
+				}
+				console.log("是在电脑");
+			  }else{
+				console.log("是在手机");
+				return false;
+			}
+		}
+        // 根据不同的终端，跳转到不同的地址
+        var theUrl = '';
+		
+		if(isPC()){
+			//显示二维码
+			document.getElementById("divPC").style.display="";//显
+		}else{
+			document.getElementById("divPC").style.display="none";//隐藏
+			if(Terminal.platform.android){//安卓端
+				theUrl = androidUrl;
+				location.href = theUrl;
+			} else {
+				if(Terminal.platform.iPhone){//iPhone端
+					theUrl = iosUrl;
+				}else if(Terminal.platform.iPad){//iPad端
+					// 还可以通过language，区分开多国语言版
+					switch(Terminal.language){
+						case 'en-us'://iPad英文版APP Store地址
+							theUrl = iosUrl;
+							break;
+						case 'ko-kr'://iPad韩语版APP Store地址
+							theUrl = iosUrl;
+							break;
+						case 'ja-jp'://iPad日文版APP Store地址
+							theUrl = iosUrl;
+							break;
+						default://iPad默认APP Store地址
+							theUrl = iosUrl;
+					}
+				}
+	 
+				location.href = theUrl;
+			}
+		}
+        
+        
+    </script>
+</html>
+
